@@ -1,0 +1,85 @@
+/* ================================================================
+   signin.css
+   STEP 1 — Structure + basic layout only.
+   Plain, minimal CSS just to place the boxes correctly.
+   No colors, shadows, fonts, or fancy styling yet.
+================================================================ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Header: a simple bar with the brand on the left and links on the right */
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 40px;
+    border-bottom: 1px solid #ccc;
+}
+
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Main area: center the card in the middle of the page */
+.main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+}
+
+/* The card: a fixed-width box */
+.card {
+    width: 448px;
+    max-width: 100%;
+    border: 1px solid #ccc;
+    padding: 35px;
+}
+
+/* Head block (badge, title, subtitle) centered */
+.card-head {
+    text-align: center;
+    margin-bottom: 16px;
+}
+
+/* Form: stack the fields vertically */
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.input {
+    width: 100%;
+    height: 45px;
+    padding: 0 10px;
+}
+
+/* Divider row */
+.divider {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 16px 0;
+}
+
+.divider-line {
+    flex: 1;
+    height: 1px;
+    background: #ccc;
+}
+
+/* Footer row */
+.foot {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 16px;
+}
