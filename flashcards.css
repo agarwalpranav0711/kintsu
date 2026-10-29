@@ -124,3 +124,15 @@ body.dark .theme-icon-moon { display: none; }
 }
 .search-box input { border: none; outline: none; background: transparent; color: var(--text-primary); font-family: var(--font-mono); font-size: 12px; width: 160px; }
 .sort-box select { border: none; outline: none; background: transparent; color: var(--text-primary); font-family: var(--font-mono); font-size: 12px; font-weight: 700; cursor: pointer; }
+
+/* Stats bars */
+.stats-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+.stat-bar {
+    display: flex; align-items: center; justify-content: space-between; padding: 16px 22px;
+    border: 3px solid var(--border-ink); border-radius: var(--radius-card); box-shadow: var(--shadow-hard);
+    font-family: var(--font-mono);
+}
+.stat-mint { background: var(--accent-mint); color: #18121E; }
+.stat-yellow { background: var(--accent-yellow); color: #18121E; }
+.stat-label { font-size: 12px; font-weight: 700; letter-spacing: 0.12em; }
+.stat-value { font-size: 26px; font-weight: 800; }
