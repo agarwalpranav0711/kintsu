@@ -136,3 +136,20 @@ body.dark .theme-icon-moon { display: none; }
 .stat-yellow { background: var(--accent-yellow); color: #18121E; }
 .stat-label { font-size: 12px; font-weight: 700; letter-spacing: 0.12em; }
 .stat-value { font-size: 26px; font-weight: 800; }
+
+/* Stacks grid and empty state */
+.stacks-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; margin-bottom: 24px; }
+.stack-card {
+    background: var(--bg-card); border: 3px solid var(--border-ink); border-radius: var(--radius-card);
+    box-shadow: var(--shadow-hard); padding: 20px;
+}
+.stack-card h3 { font-family: var(--font-display); font-size: 18px; margin-bottom: 6px; }
+.stack-card p { font-family: var(--font-mono); font-size: 12px; color: var(--text-secondary); }
+.stack-meta { display: flex; justify-content: space-between; margin-top: 14px; font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); }
+.empty-state {
+    background: var(--bg-card); border: 3px dashed var(--border-ink); border-radius: var(--radius-card);
+    box-shadow: var(--shadow-hard); padding: 48px 24px; text-align: center; margin-bottom: 24px;
+}
+.empty-icon { color: var(--accent-pink); font-size: 24px; margin-bottom: 10px; }
+.empty-title { font-family: var(--font-display); font-size: 20px; margin-bottom: 8px; }
+.empty-text { font-family: var(--font-mono); font-size: 12px; color: var(--text-secondary); line-height: 1.6; }
