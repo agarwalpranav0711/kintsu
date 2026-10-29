@@ -115,8 +115,13 @@ function initLibrary() {
     }
     const search = document.getElementById('stackSearch');
     if (search) search.addEventListener('input', renderStacks);
-    const sort = document.getElementById('stackSort');
-    if (sort) sort.addEventListener('change', renderStacks);
+    const sortBtn = document.getElementById('stackSortBtn');
+    const sortLabel = document.getElementById('stackSortLabel');
+    if (sortBtn) sortBtn.addEventListener('click', function () {
+        sortNewest = !sortNewest;
+        if (sortLabel) sortLabel.textContent = sortNewest ? 'NEWEST' : 'OLDEST';
+        renderStacks();
+    });
     document.querySelectorAll('.feedback-type').forEach(btn => {
         btn.onclick = () => {
             document.querySelectorAll('.feedback-type').forEach(b => b.classList.remove('selected'));
