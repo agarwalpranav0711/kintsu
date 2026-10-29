@@ -1,0 +1,98 @@
+/* Kintsu Flashcard Library - neo-brutalist, as in the live prototype */
+:root {
+    --bg-page: #FDF2F8;
+    --bg-card: #FFFFFF;
+    --border-ink: #1A1A1A;
+    --border-subtle: #E5E7EB;
+    --text-primary: #18121E;
+    --text-secondary: #4B5563;
+    --text-muted: #6B7280;
+    --accent-pink: #EC329F;
+    --accent-pink-2: #ff4bb4;
+    --accent-yellow: #FACC15;
+    --accent-purple: #A78BFA;
+    --accent-mint: #6EE7B7;
+    --shadow-hard: 4px 4px 0 #1A1A1A;
+    --radius-card: 20px;
+    --radius-pill: 999px;
+    --radius-input: 12px;
+    --font-display: 'Space Grotesk', system-ui, sans-serif;
+    --font-mono: 'Space Mono', ui-monospace, monospace;
+    --font-body: 'Inter', system-ui, sans-serif;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    background: var(--bg-page);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    min-height: 100vh;
+}
+body.dark {
+    --bg-page: #17111B;
+    --bg-card: #241B2B;
+    --border-ink: #F6EFF8;
+    --text-primary: #F6EFF8;
+    --text-secondary: #B8B0C4;
+    --text-muted: #A89BAE;
+    --shadow-hard: 4px 4px 0 #F6EFF8;
+}
+
+/* Nav bar - matches dashboard nav done by Pratishtha */
+.dash-navbar {
+    border-bottom: 3px solid var(--border-ink);
+    background-color: rgba(255, 242, 251, 0.95);
+    backdrop-filter: blur(12px);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+body.dark .dash-navbar { background-color: rgba(23, 17, 27, 0.95); }
+.nav-container {
+    max-width: 1320px; margin: 0 auto; padding: 10px 24px;
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+}
+.nav-brand { display: flex; align-items: center; gap: 12px; font-weight: 900; text-decoration: none; color: inherit; }
+.logo-box {
+    width: 38px; height: 38px; background: #ff4bb4; border: 3px solid var(--border-ink);
+    border-radius: 12px; box-shadow: 2px 2px 0 var(--border-ink);
+    display: grid; place-items: center; color: #ffffff; font-size: 1.25rem; flex-shrink: 0;
+}
+.logo-icon { font-size: 1.25rem; line-height: 1; color: #ffffff; }
+.logo-text { font-family: var(--font-mono); font-size: 1.1rem; font-weight: 800; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-primary); }
+.nav-pill-actions { display: flex; align-items: center; gap: 12px; }
+.nav-pill {
+    padding: 8px 22px; border-radius: var(--radius-pill); font-family: var(--font-display); font-weight: 800; font-size: 14px;
+    text-decoration: none; border: 3px solid var(--border-ink); cursor: pointer; box-shadow: 4px 4px 0 var(--border-ink);
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+.nav-pill:hover { transform: translate(-1.5px, -1.5px); box-shadow: 6px 6px 0 var(--border-ink); }
+.nav-pill:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--border-ink); }
+.active-pill { background: var(--accent-purple); color: #18121E; }
+.outline-pill { background: #FFFFFF; color: #18121E; }
+.theme-toggle-btn {
+    width: 48px; height: 46px; padding: 0; border-radius: var(--radius-pill); border: 3px solid var(--border-ink);
+    background: #ffd84d; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 4px 4px 0 var(--border-ink); color: #000000;
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+.theme-toggle-btn:hover { transform: translate(-1.5px, -1.5px); box-shadow: 6px 6px 0 var(--border-ink); }
+.theme-toggle-btn:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--border-ink); }
+.theme-icon-sun { display: none; }
+.theme-icon-moon { display: block; }
+body.dark .theme-icon-sun { display: block; }
+body.dark .theme-icon-moon { display: none; }
+.user-email-pill {
+    padding: 6px 14px; border-radius: var(--radius-pill); border: 1.5px solid var(--border-subtle);
+    font-family: var(--font-mono); font-size: 11px; color: var(--text-secondary);
+    max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.sign-out-btn {
+    padding: 8px 22px; border-radius: var(--radius-pill); background: #ff4bb4;
+    color: #FFF; font-family: var(--font-display); font-weight: 800; font-size: 14px;
+    border: 3px solid var(--border-ink); box-shadow: 4px 4px 0 var(--border-ink); cursor: pointer;
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+.sign-out-btn:hover { transform: translate(-1.5px, -1.5px); box-shadow: 6px 6px 0 var(--border-ink); }
+.sign-out-btn:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--border-ink); }
+
+/* Page layout */
+.flash-container { max-width: 1200px; margin: 0 auto; padding: 32px 28px 80px 28px; }
