@@ -114,3 +114,13 @@ body.dark .theme-icon-moon { display: none; }
 .lib-title { font-family: var(--font-display); font-weight: 900; font-size: 36px; line-height: 1.1; }
 .lib-subtitle { font-family: var(--font-mono); font-size: 13px; color: var(--text-secondary); margin-top: 6px; }
 .lib-divider { border: none; border-top: 3px solid var(--border-ink); margin: 24px 0; }
+
+/* Search and sort controls */
+.lib-controls { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.search-box, .sort-box {
+    display: flex; align-items: center; gap: 8px; background: var(--bg-card);
+    border: 2.5px solid var(--border-ink); border-radius: var(--radius-pill);
+    box-shadow: var(--shadow-hard); padding: 8px 16px; font-family: var(--font-mono); font-size: 12px;
+}
+.search-box input { border: none; outline: none; background: transparent; color: var(--text-primary); font-family: var(--font-mono); font-size: 12px; width: 160px; }
+.sort-box select { border: none; outline: none; background: transparent; color: var(--text-primary); font-family: var(--font-mono); font-size: 12px; font-weight: 700; cursor: pointer; }
