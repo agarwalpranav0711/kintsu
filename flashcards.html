@@ -51,14 +51,10 @@
                     <span aria-hidden="true">&#128269;</span>
                     <input type="search" id="stackSearch" placeholder="Search stacks..." autocomplete="off">
                 </label>
-                <label class="sort-box">
+                <button type="button" class="sort-box" id="stackSortBtn" title="Toggle sort order" aria-label="Toggle sort order">
                     <span aria-hidden="true">&#8645;</span>
-                    <select id="stackSort" aria-label="Sort stacks">
-                        <option value="newest">NEWEST</option>
-                        <option value="oldest">OLDEST</option>
-                        <option value="name">NAME</option>
-                    </select>
-                </label>
+                    <span id="stackSortLabel">NEWEST</span>
+                </button>
             </div>
         </div>
 
@@ -76,10 +72,14 @@
         </section>
         <div class="stacks-grid" id="stacksGrid"></div>
 
+        <div class="no-match-state" id="noMatchState" style="display: none;">
+            <p class="empty-text" id="noMatchText"></p>
+        </div>
+
         <div class="empty-state" id="emptyState">
             <div class="empty-icon" aria-hidden="true">&#10022;</div>
             <h2 class="empty-title">No flashcards yet</h2>
-            <p class="empty-text">Highlight text in a note and hit &ldquo;Create Flashcards&rdquo; &mdash; new stacks show up here.</p>
+            <p class="empty-text">Highlight text in a note and hit &ldquo;Create Flashcards +&rdquo; &mdash; new stacks show up here.</p>
         </div>
         <section class="feedback-card" aria-label="Send feedback">
             <div class="feedback-head">
@@ -91,15 +91,40 @@
             </div>
             <div class="feedback-types" role="group" aria-label="Feedback type">
                 <button type="button" class="feedback-type" data-type="BUG">BUG</button>
-                <button type="button" class="feedback-type" data-type="IDEA">IDEA</button>
+                <button type="button" class="feedback-type selected" data-type="IDEA">IDEA</button>
                 <button type="button" class="feedback-type" data-type="UX">UX</button>
                 <button type="button" class="feedback-type" data-type="OTHER">OTHER</button>
             </div>
             <label class="rating-label" for="experienceRange">HOW&rsquo;S THE EXPERIENCE? (<span id="ratingValue">4</span>/5)</label>
             <input type="range" id="experienceRange" min="1" max="5" step="1" value="4" class="rating-range">
+            <label class="feedback-message-label" for="feedbackMessage">YOUR MESSAGE</label>
+            <textarea id="feedbackMessage" rows="4" maxlength="1000" placeholder="Tell me what worked, what didn't, or what you wish existed&hellip;"></textarea>
+            <div class="feedback-footer">
+                <span class="feedback-as" id="feedbackAs">Sending anonymously</span>
+                <button type="button" class="btn-pink" id="feedbackSendBtn" disabled>Send feedback</button>
+            </div>
             <p class="feedback-note" id="feedbackNote"></p>
         </section>
     </main>
+
+    <div class="modal-backdrop" id="reviewModal" style="display: none;">
+        <div class="modal-card">
+            <div class="modal-head">
+                <h3 class="modal-title" id="reviewStackTitle">Review</h3>
+                <button type="button" class="modal-close-btn" id="reviewCloseBtn">[ Close review ]</button>
+            </div>
+            <div class="review-card" id="reviewCard">
+                <p class="review-side" id="reviewSide">QUESTION</p>
+                <p class="review-text" id="reviewText"></p>
+            </div>
+            <div class="modal-actions">
+                <button type="button" class="btn-outline" id="reviewPrevBtn">Previous</button>
+                <button type="button" class="btn-pink" id="reviewFlipBtn">Flip</button>
+                <button type="button" class="btn-pink" id="reviewNextBtn">Next</button>
+            </div>
+            <p class="review-progress" id="reviewProgress"></p>
+        </div>
+    </div>
 
     <script src="flashcards.js"></script>
 </body>
