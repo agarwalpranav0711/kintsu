@@ -1,9 +1,3 @@
-/**
- * Kintsu Flashcard Library
- * Loads stacks from localStorage (kintsu_flashcards), renders them,
- * updates STACKS / CARDS counts, filters by search and sorts by date or name.
- * With no stacks saved, the empty state stays visible, as in the prototype.
- */
 let stacks = [];
 const DEFAULT_STUDY_STACKS = [
     {
@@ -127,11 +121,18 @@ function renderStacks() {
 
 function initLibrary() {
     const user = JSON.parse(localStorage.getItem('kintsu_user') || '{}');
+    if (!user.email) {
+        window.location.href = 'signin.html';
+        return;
+    }
     if (user.email) {
         const tag = document.getElementById('userEmailTag');
         if (tag) tag.textContent = user.email;
     }
     const themeBtn = document.getElementById('flashThemeToggle');
+    const savedTheme = localStorage.getItem('kintsu_theme');
+    const startDark = savedTheme ? savedTheme === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    document.body.classList.toggle('dark', startDark);
     if (themeBtn) {
         themeBtn.onclick = () => {
             const isDark = document.body.classList.toggle('dark');
@@ -190,7 +191,6 @@ function initLibrary() {
     const asEl = document.getElementById("feedbackAs");
     if (asEl && user.email) asEl.textContent = "Sending as " + user.email;
 
-    // Create Flashcard Modal Handlers
     const createModal = document.getElementById("createFlashcardModal");
     const openCreateBtn = document.getElementById("openCreateFlashcardBtn");
     const closeCreateBtn = document.getElementById("closeCreateCardModal");
@@ -257,7 +257,6 @@ function initLibrary() {
                 localStorage.setItem("kintsu_flashcards", JSON.stringify(stacks));
             } catch (err) {}
 
-            // Sync to MongoDB via Express API
             if (window.fetch) {
                 fetch('/api/flashcards', {
                     method: 'POST',
@@ -277,7 +276,6 @@ function initLibrary() {
 
     renderStacks();
 
-    // Auto-sync initial stacks to server MongoDB/JSON storage
     if (window.fetch) {
         fetch('/api/flashcards')
             .then(r => r.json())

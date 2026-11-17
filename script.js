@@ -18,19 +18,15 @@ document.addEventListener('DOMContentLoaded', function () {
             localStorage.setItem(key, value);
         } catch (e) {}
     }
-    var darkToggle = document.getElementById('darkToggle'), savedTheme = safeGetStorage('kintsu_theme');
-    if (savedTheme === 'dark' || (!savedTheme && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-        document.body.classList.add('dark');
-        document.documentElement.classList.add('dark');
-    }
-    if (darkToggle) {
-        darkToggle.addEventListener('click', function () {
-            document.body.classList.toggle('dark');
-            document.documentElement.classList.toggle('dark');
-            var isDark = document.body.classList.contains('dark');
-            safeSetStorage('kintsu_theme', isDark ? 'dark' : 'light');
-            showToast(isDark ? 'Dark mode enabled 🌙' : 'Light mode enabled ☀️', 1800);
-        });
+    const themeBtn = document.getElementById('darkToggle');
+    const savedTheme = localStorage.getItem('kintsu_theme');
+    const startDark = savedTheme ? savedTheme === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    document.body.classList.toggle('dark', startDark);
+    if (themeBtn) {
+        themeBtn.onclick = () => {
+            const isDark = document.body.classList.toggle('dark');
+            localStorage.setItem('kintsu_theme', isDark ? 'dark' : 'light');
+        };
     }
     var selectableText = document.getElementById('selectableText'), selectionPopup = document.getElementById('selectionPopup'), btnCreateFlashcard = document.getElementById('btnCreateFlashcard'), btnDismissFlashcard = document.getElementById('btnDismissFlashcard'), synthesisBanner = document.getElementById('synthesisBanner'), flashcardDeck = document.getElementById('flashcardDeck'), FULL_DEMO_TEXT = "Modern LLMs rely on Transformer self-attention to process entire sequences in parallel. Unlike sequential RNNs, Multi-Head Attention allows tokens to dynamically attend to contextual relationships across distant words. Scaled Dot-Product Attention computes query-key affinity scores normalized by the square root of the head dimension.", DEFAULT_HIGHLIGHT = "Scaled Dot-Product Attention computes query-key affinity scores normalized by the square root of the head dimension.", isUserInteracted = false, autoDemoTimer = null, autoStepTimeout = null;
     function renderDemoText(highlightPhrase) {
@@ -99,7 +95,7 @@ document.addEventListener('DOMContentLoaded', function () {
             setTimeout(function () {
                 if (synthesisBanner) synthesisBanner.classList.remove('active');
                 cycleCardDeck();
-                showToast('✨ 3 Flashcards generated from lecture notes!', 3500);
+                showToast('3 Flashcards generated from lecture notes!', 3500);
             }, 1200);
         });
     }
@@ -168,7 +164,7 @@ document.addEventListener('DOMContentLoaded', function () {
             var url = ytUrlInput.value.trim();
             if (!url) {
                 ytUrlInput.setAttribute('aria-invalid', 'true');
-                showToast('Please enter a YouTube video URL ⚠️');
+                showToast('Please enter a YouTube video URL');
                 ytUrlInput.focus();
                 return;
             }
@@ -176,10 +172,10 @@ document.addEventListener('DOMContentLoaded', function () {
             if (videoId) {
                 ytUrlInput.removeAttribute('aria-invalid');
                 ytVideoPlayer.src = 'https://www.youtube.com/embed/' + encodeURIComponent(videoId) + '?enablejsapi=1&rel=0&modestbranding=1';
-                showToast('Lecture video embedded successfully! 🎥');
+                showToast('Lecture video embedded successfully!');
             } else {
                 ytUrlInput.setAttribute('aria-invalid', 'true');
-                showToast('Invalid or unsupported YouTube URL ⚠️');
+                showToast('Invalid or unsupported YouTube URL');
                 ytUrlInput.focus();
             }
         });
@@ -255,14 +251,14 @@ document.addEventListener('DOMContentLoaded', function () {
                         '<input class="toggle-topic-title" type="text" value="AI Synthesis: Key Takeaways (' + formatTime(currentLectureSeconds) + ')">' +
                     '</div>' +
                     '<div class="toggle-topic-content">' +
-                        '<p>✨ <strong>Automated Lecture Synthesis (Preview):</strong></p>' +
+                        '<p><strong>Automated Lecture Synthesis (Preview):</strong></p>' +
                         '<ul>' +
                             '<li>Deep representations learn hierarchical feature detectors automatically through gradient descent.</li>' +
                             '<li>Matrix operations leverage parallel SIMD and GPU tensors for high-throughput batching.</li>' +
                         '</ul>' +
                     '</div>';
                 editorCanvas.prepend(summarySection);
-                showToast('✨ AI Summary added to your notes!');
+                showToast('AI Summary added to your notes!');
             }, 1000);
         });
     }
@@ -281,7 +277,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     }), '*');
                 } catch (err) {}
             }
-            showToast('Seeking video to ' + formatTime(secs) + ' ⏩');
+            showToast('Seeking video to ' + formatTime(secs));
         }
     });
     function setupFormatCommand(btnId, command, value) {
@@ -364,7 +360,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     pendingSelectionRange.insertNode(mark);
                 } catch (err) { document.execCommand('hiliteColor', false, 'rgba(236, 50, 159, 0.85)'); }
 
-                // Save to Flashcard Library (localStorage)
                 try {
                     var currentStacks = JSON.parse(localStorage.getItem('kintsu_flashcards') || '[]');
                     var newStack = {
@@ -390,7 +385,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 } catch (e) {}
             }
             hideWorkspaceBubble();
-            showToast('✨ 3 AI Flashcards created & saved to Library!', 3500);
+            showToast('3 AI Flashcards created & saved to Library!', 3500);
             cycleCardDeck();
         });
     }
@@ -405,7 +400,7 @@ document.addEventListener('DOMContentLoaded', function () {
     window.addEventListener('resize', hideWorkspaceBubble, { passive: true });
     var cmdVoice = document.getElementById('cmdVoice');
     if (cmdVoice) {
-        cmdVoice.addEventListener('click', function () { showToast('🎙️ Voice-to-text listening… (Dictation simulation)'); });
+        cmdVoice.addEventListener('click', function () { showToast('Voice-to-text listening… (Dictation simulation)'); });
     }
     var btnInsertCodeBlock = document.getElementById('btnInsertCodeBlock');
     if (btnInsertCodeBlock && editorCanvas) {
@@ -414,7 +409,7 @@ document.addEventListener('DOMContentLoaded', function () {
             pre.style.cssText = 'background:#0e0a15; color:#7ad1f5; border:2px solid var(--ink); border-radius:8px; padding:12px; margin:12px 0; font-family:var(--font-mono);';
             pre.textContent = 'function calculateActivation(z) {\n  return 1 / (1 + Math.exp(-z));\n}';
             editorCanvas.appendChild(pre);
-            showToast('Code block inserted into notes 💻');
+            showToast('Code block inserted into notes');
         });
     }
     document.addEventListener('click', function (e) {
@@ -450,7 +445,7 @@ document.addEventListener('DOMContentLoaded', function () {
             var code = embeddedCodeInput ? embeddedCodeInput.value.trim() : '';
             if (!code) {
                 embeddedTerminalOutput.textContent = '[Diagnostic Output]\nError: Sandbox code input is empty. Write code to execute.';
-                showToast('Sandbox code editor is empty ⚠️');
+                showToast('Sandbox code editor is empty');
                 return;
             }
             isRunningEmbedded = true;
@@ -475,11 +470,11 @@ document.addEventListener('DOMContentLoaded', function () {
                     result.output + '\n' +
                     '-------------------------------------------\n' +
                     '[Process completed with exit code ' + (result.success ? 0 : 1) + ']';
-                showToast(result.success ? 'Code executed successfully! ✅' : 'Execution finished with errors ⚠️');
+                showToast(result.success ? 'Code executed successfully!' : 'Execution finished with errors');
             })
             .catch(function (err) {
                 embeddedTerminalOutput.textContent = '[Execution Error]\n' + err.message;
-                showToast('Execution error ⚠️');
+                showToast('Execution error');
             })
             .finally(function () {
                 isRunningEmbedded = false;
@@ -499,7 +494,7 @@ document.addEventListener('DOMContentLoaded', function () {
             var code = fullCodeInput ? fullCodeInput.value.trim() : '';
             if (!code) {
                 fullCodeTerminalOutput.textContent = '[Diagnostic Output]\nError: Code editor is empty. Enter code to execute.';
-                showToast('Code workspace is empty ⚠️');
+                showToast('Code workspace is empty');
                 return;
             }
             isRunningFullCode = true;
@@ -524,11 +519,11 @@ document.addEventListener('DOMContentLoaded', function () {
                     result.output + '\n' +
                     '-------------------------------------------\n' +
                     '[Finished with exit code ' + (result.success ? 0 : 1) + ']';
-                showToast(result.success ? 'Ran code successfully! ✅' : 'Runtime error in code ⚠️');
+                showToast(result.success ? 'Ran code successfully!' : 'Runtime error in code');
             })
             .catch(function (err) {
                 fullCodeTerminalOutput.textContent = '[Execution Error]\n' + err.message;
-                showToast('Execution error ⚠️');
+                showToast('Execution error');
             })
             .finally(function () {
                 isRunningFullCode = false;
@@ -677,7 +672,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     feedbackFormStatus.textContent = 'Please enter your message before sending.';
                     feedbackFormStatus.className = 'feedback-status-msg feedback-status-error';
                 }
-                showToast('Please type a message before submitting ✍️');
+                showToast('Please type a message before submitting');
                 if (feedbackText) feedbackText.focus();
                 return;
             }
@@ -698,7 +693,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             setTimeout(function () {
-                showToast('Feedback noted (' + category + ' • ' + rating + '★)! Thank you 🙌', 4000);
+                showToast('Feedback noted (' + category + ' • ' + rating + '★)! Thank you', 4000);
                 if (feedbackFormStatus) {
                     feedbackFormStatus.textContent = 'Thank you! Your feedback has been received anonymously for this demo session.';
                     feedbackFormStatus.className = 'feedback-status-msg feedback-status-success';
@@ -735,51 +730,92 @@ document.addEventListener('DOMContentLoaded', function () {
 
             var email = emailInput ? emailInput.value.trim() : '', password = passwordInput ? passwordInput.value : '';
 
+            var errorBox = document.getElementById('signinError');
+            function showSigninError(message, withSignupLink) {
+                if (!errorBox) { alert(message); return; }
+                errorBox.textContent = message + ' ';
+                if (withSignupLink) {
+                    var link = document.createElement('a');
+                    link.href = 'signup.html';
+                    link.textContent = 'Create an account';
+                    errorBox.appendChild(link);
+                }
+                errorBox.hidden = false;
+            }
+            if (errorBox) { errorBox.textContent = ''; errorBox.hidden = true; }
             if (!email || !email.includes('@')) {
-                alert('Please enter a valid email address.');
+                showSigninError('Please enter a valid email address.');
                 if (emailInput) emailInput.focus();
                 return;
             }
-
             if (!password || password.length < 4) {
-                alert('Password must be at least 4 characters long.');
+                showSigninError('Password must be at least 4 characters long.');
                 if (passwordInput) passwordInput.focus();
                 return;
             }
-
-            var username = email.split('@')[0], userRecord = { email: email, username: username };
-
-            safeSetStorage('kintsu_user', JSON.stringify(userRecord));
-
-            if (window.fetch) {
-                fetch('/api/users', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(userRecord)
-                }).catch(function () {});
-            }
-
-            if (submitBtn) {
-                isSigningIn = true;
-                submitBtn.disabled = true;
-                submitBtn.textContent = 'SIGNING IN...';
-                setTimeout(function () {
-                    submitBtn.textContent = '✓ SUCCESS';
-                    setTimeout(function () { window.location.href = 'dashboard.html'; }, 400);
-                }, 500);
-            }
+            isSigningIn = true;
+            if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'SIGNING IN...'; }
+            fetch('/api/auth/signin', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: email, password: password })
+            }).then(function (res) {
+                return res.json().then(function (data) { return { ok: res.ok, data: data }; });
+            }).then(function (result) {
+                if (!result.ok) {
+                    var notFound = result.data.code === 'NO_ACCOUNT';
+                    var msg = notFound ? 'No account exists for this email. Please create one first.' : (result.data.error || 'Could not sign in.');
+                    throw { message: msg, withLink: notFound || result.data.code === 'NO_PASSWORD' };
+                }
+                safeSetStorage('kintsu_user', JSON.stringify({ email: result.data.data.email, username: result.data.data.username }));
+                if (submitBtn) submitBtn.textContent = '\u2713 SUCCESS';
+                setTimeout(function () { window.location.href = 'dashboard.html'; }, 400);
+            }).catch(function (err) {
+                isSigningIn = false;
+                if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'SIGN IN'; }
+                if (err instanceof TypeError) showSigninError('Could not reach the server.');
+                else showSigninError(err.message, err.withLink);
+            });
         });
     }
-
-    var googleBtn = document.getElementById('googleBtn');
-    if (googleBtn) {
-        googleBtn.addEventListener('click', function () {
-            var demoUser = { email: 'student@kintsu.edu', username: 'student' };
-            safeSetStorage('kintsu_user', JSON.stringify(demoUser));
-            googleBtn.textContent = 'CONNECTING...';
-            setTimeout(function () {
-                window.location.href = 'dashboard.html';
-            }, 300);
+    var currentUser = null;
+    try { currentUser = JSON.parse(safeGetStorage('kintsu_user') || 'null'); } catch (e) {}
+    if (currentUser && currentUser.email) {
+        document.querySelectorAll('a[href="signin.html"]').forEach(function (a) {
+            a.setAttribute('href', 'dashboard.html');
+            if (a.closest('.nav-actions')) a.textContent = currentUser.username || 'Dashboard';
+            else if (a.classList.contains('workspace-save-btn')) a.textContent = 'Save to your dashboard';
+            else if (a.classList.contains('sticky-signup-btn')) a.textContent = 'Dashboard';
         });
+    }
+    var googleHolder = document.getElementById('googleSignIn');
+    if (googleHolder) {
+        var googleErrorBox = document.getElementById('signinError');
+        var onGoogleCredential = function (response) {
+            fetch('/api/auth/google', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ credential: response.credential })
+            }).then(function (res) {
+                return res.json().then(function (data) { return { ok: res.ok, data: data }; });
+            }).then(function (result) {
+                if (!result.ok) throw new Error(result.data.error || 'Google sign-in failed.');
+                safeSetStorage('kintsu_user', JSON.stringify({ email: result.data.data.email, username: result.data.data.username }));
+                window.location.href = 'dashboard.html';
+            }).catch(function (err) {
+                if (googleErrorBox) { googleErrorBox.textContent = err.message; googleErrorBox.hidden = false; }
+            });
+        };
+        fetch('/api/auth/google-client-id').then(function (res) { return res.json(); }).then(function (cfg) {
+            var tries = 0;
+            (function renderWhenReady() {
+                if (window.google && google.accounts && cfg.clientId) {
+                    google.accounts.id.initialize({ client_id: cfg.clientId, callback: onGoogleCredential });
+                    google.accounts.id.renderButton(googleHolder, { theme: 'outline', size: 'large', text: 'continue_with', width: 320 });
+                } else if (tries++ < 50) {
+                    setTimeout(renderWhenReady, 100);
+                }
+            })();
+        }).catch(function () {});
     }
 });

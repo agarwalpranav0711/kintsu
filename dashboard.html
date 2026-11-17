@@ -10,9 +10,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=Space+Grotesk:wght@600;700;800;900&family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="dashboard.css">
 </head>
-<body class="dark-theme">
+<body>
 
-    <!-- Top Navigation Bar -->
     <header class="dash-navbar">
         <div class="nav-container">
             <a href="index.html" class="nav-brand" title="Return to Home">
@@ -26,7 +25,6 @@
                 <a href="dashboard.html" class="nav-pill active-pill">Dashboard</a>
                 <a href="index.html#live-demo" class="nav-pill outline-pill">Workspace</a>
                 <a href="flashcards.html" class="nav-pill outline-pill">Flashcards</a>
-                <a href="/stats" class="nav-pill outline-pill" title="Server-Rendered EJS Analytics">EJS Metrics</a>
                 <button type="button" class="theme-toggle-btn" id="dashThemeToggle" aria-label="Toggle theme">
                     <svg class="theme-icon-moon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"></path></svg>
                     <svg class="theme-icon-sun" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>
@@ -37,10 +35,8 @@
         </div>
     </header>
 
-    <!-- Main Container -->
     <div class="dash-container">
 
-        <!-- Vault Hero Section -->
         <section class="vault-hero">
             <div class="vault-hero-left">
                 <div class="study-vault-badge">
@@ -81,7 +77,6 @@
 
         <div class="dash-layout">
 
-            <!-- Left Sidebar (Boards) -->
             <aside class="boards-sidebar">
                 <div class="sidebar-head">
                     <div class="boards-title">
@@ -126,7 +121,6 @@
                 </div>
             </aside>
 
-            <!-- Center Content (Notes Grid) -->
             <main class="notes-content">
                 <div class="batch-bar" id="batchBar" style="display: none;">
                     <div class="batch-left">
@@ -148,12 +142,10 @@
                 </div>
 
                 <div class="notes-grid" id="notesGrid">
-                    <!-- Note Cards dynamically rendered by dashboard.js -->
                 </div>
 
-                <!-- Empty State (Shown when no notes match) -->
                 <div class="empty-state" id="emptyState" style="display: none;">
-                    <div class="empty-icon">📓</div>
+                    <div class="empty-icon">✦</div>
                     <h3>No notes found in this board</h3>
                     <p>Click "+ Create new note" above or use our suggested video to get started.</p>
                 </div>
@@ -183,8 +175,8 @@
             <p class="qs-desc">Open the editor and paste a YouTube link - or use our suggested video to start immediately.</p>
             
             <div class="qs-actions">
-                <button type="button" class="btn-qs-pink" id="qsSuggestedBtn">✨ Use suggested video</button>
-                <button type="button" class="btn-qs-outline" id="qsPasteBtn">I'll paste my own ↗️</button>
+                <button type="button" class="btn-qs-pink" id="qsSuggestedBtn">Use suggested video</button>
+                <button type="button" class="btn-qs-outline" id="qsPasteBtn">I'll paste my own ↗</button>
             </div>
 
             <div class="qs-footer-hint">
@@ -194,7 +186,6 @@
     </aside>
 
 
-    <!-- Modal: Create New Note -->
     <div class="modal-backdrop" id="createNoteModal" style="display: none;">
         <div class="modal-card">
             <div class="modal-head">
@@ -250,7 +241,7 @@
 
                 <div class="modal-actions">
                     <button type="button" class="btn-modal-cancel" id="cancelCreateModalBtn">Cancel</button>
-                    <button type="submit" class="btn-modal-submit" id="submitCreateBtn">Create Note ↗️</button>
+                    <button type="submit" class="btn-modal-submit" id="submitCreateBtn">Create Note ↗</button>
                 </div>
             </form>
         </div>
